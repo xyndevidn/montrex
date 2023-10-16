@@ -30,7 +30,7 @@ class SeasonModel extends Equatable {
         overview: json["overview"],
         posterPath: json["poster_path"],
         seasonNumber: json["season_number"],
-        voteAverage: json["vote_average"],
+        voteAverage: json["vote_average"].toDouble(),
       );
 
   Map<String, dynamic> toJson() => {
