@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class SearchMoviePage extends StatelessWidget {
-  static const ROUTE_NAME = '/search-movie';
+  static const routeName = '/search-movie';
 
   const SearchMoviePage({super.key});
 

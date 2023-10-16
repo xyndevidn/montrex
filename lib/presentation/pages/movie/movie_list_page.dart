@@ -15,7 +15,7 @@ class MovieListPage extends StatefulWidget {
   const MovieListPage({super.key});
 
   @override
-  _MovieListPageState createState() => _MovieListPageState();
+  State<MovieListPage> createState() => _MovieListPageState();
 }
 
 class _MovieListPageState extends State<MovieListPage> {
@@ -37,13 +37,13 @@ class _MovieListPageState extends State<MovieListPage> {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.pushNamed(context, SearchMoviePage.ROUTE_NAME);
+              Navigator.pushNamed(context, SearchMoviePage.routeName);
             },
             icon: const Icon(Icons.search),
           ),
           IconButton(
             onPressed: () {
-              Navigator.pushNamed(context, WatchlistMoviesPage.ROUTE_NAME);
+              Navigator.pushNamed(context, WatchlistMoviesPage.routeName);
             },
             icon: const Icon(Icons.bookmark),
           )
@@ -74,7 +74,7 @@ class _MovieListPageState extends State<MovieListPage> {
               _buildSubHeading(
                 title: 'Popular',
                 onTap: () =>
-                    Navigator.pushNamed(context, PopularMoviesPage.ROUTE_NAME),
+                    Navigator.pushNamed(context, PopularMoviesPage.routeName),
               ),
               Consumer<MovieListNotifier>(builder: (context, data, child) {
                 final state = data.popularMoviesState;
@@ -91,7 +91,7 @@ class _MovieListPageState extends State<MovieListPage> {
               _buildSubHeading(
                 title: 'Top Rated',
                 onTap: () =>
-                    Navigator.pushNamed(context, TopRatedMoviesPage.ROUTE_NAME),
+                    Navigator.pushNamed(context, TopRatedMoviesPage.routeName),
               ),
               Consumer<MovieListNotifier>(builder: (context, data, child) {
                 final state = data.topRatedMoviesState;
@@ -156,7 +156,7 @@ class MovieList extends StatelessWidget {
               onTap: () {
                 Navigator.pushNamed(
                   context,
-                  MovieDetailPage.ROUTE_NAME,
+                  MovieDetailPage.routeName,
                   arguments: movie.id,
                 );
               },

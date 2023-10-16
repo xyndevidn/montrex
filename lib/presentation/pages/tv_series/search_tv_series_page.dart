@@ -6,7 +6,7 @@ import 'package:montrex/presentation/widgets/tv_card_list.dart';
 import 'package:provider/provider.dart';
 
 class SearchTvSeriesPage extends StatelessWidget {
-  static const ROUTE_NAME = '/search-tv';
+  static const routeName = '/search-tv';
 
   const SearchTvSeriesPage({super.key});
 

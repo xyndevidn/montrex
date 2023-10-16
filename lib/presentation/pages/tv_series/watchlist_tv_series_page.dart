@@ -6,7 +6,7 @@ import 'package:montrex/presentation/widgets/tv_card_list.dart';
 import 'package:provider/provider.dart';
 
 class WatchListTvSeriesPage extends StatefulWidget {
-  static const ROUTE_NAME = '/watchlist-tv';
+  static const routeName = '/watchlist-tv';
   const WatchListTvSeriesPage({super.key});
 
   @override

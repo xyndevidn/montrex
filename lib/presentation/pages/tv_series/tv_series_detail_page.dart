@@ -10,7 +10,7 @@ import 'package:montrex/presentation/provider/tv_series/tv_series_detail_notifie
 import 'package:provider/provider.dart';
 
 class TvSeriesDetailPage extends StatefulWidget {
-  static const ROUTE_NAME = '/detail-tv';
+  static const routeName = '/detail-tv';
 
   final int id;
   const TvSeriesDetailPage({super.key, required this.id});
@@ -245,7 +245,7 @@ class DetailContent extends StatelessWidget {
                                             onTap: () {
                                               Navigator.pushReplacementNamed(
                                                 context,
-                                                TvSeriesDetailPage.ROUTE_NAME,
+                                                TvSeriesDetailPage.routeName,
                                                 arguments: tvSeries.id,
                                               );
                                             },

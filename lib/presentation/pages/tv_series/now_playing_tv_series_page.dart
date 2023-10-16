@@ -5,7 +5,7 @@ import 'package:montrex/presentation/widgets/tv_card_list.dart';
 import 'package:provider/provider.dart';
 
 class NowPlayingTvSeriesPage extends StatefulWidget {
-  static const ROUTE_NAME = '/now-playing-tv';
+  static const routeName = '/now-playing-tv';
 
   const NowPlayingTvSeriesPage({super.key});
 

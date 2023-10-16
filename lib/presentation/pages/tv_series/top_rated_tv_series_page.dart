@@ -5,7 +5,7 @@ import 'package:montrex/presentation/widgets/tv_card_list.dart';
 import 'package:provider/provider.dart';
 
 class TopRatedTvSeriesPage extends StatefulWidget {
-  static const ROUTE_NAME = '/top-rated-tv';
+  static const routeName = '/top-rated-tv';
   const TopRatedTvSeriesPage({super.key});
 
   @override

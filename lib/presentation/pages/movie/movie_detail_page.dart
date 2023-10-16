@@ -10,13 +10,13 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
 
 class MovieDetailPage extends StatefulWidget {
-  static const ROUTE_NAME = '/detail';
+  static const routeName = '/detail';
 
   final int id;
   const MovieDetailPage({super.key, required this.id});
 
   @override
-  _MovieDetailPageState createState() => _MovieDetailPageState();
+  State<MovieDetailPage> createState() => _MovieDetailPageState();
 }
 
 class _MovieDetailPageState extends State<MovieDetailPage> {
@@ -120,6 +120,8 @@ class DetailContent extends StatelessWidget {
                                       .removeFromWatchlist(movie);
                                 }
 
+                                if (!context.mounted) return;
+
                                 final message =
                                     Provider.of<MovieDetailNotifier>(context,
                                             listen: false)
@@ -210,7 +212,7 @@ class DetailContent extends StatelessWidget {
                                             onTap: () {
                                               Navigator.pushReplacementNamed(
                                                 context,
-                                                MovieDetailPage.ROUTE_NAME,
+                                                MovieDetailPage.routeName,
                                                 arguments: movie.id,
                                               );
                                             },
