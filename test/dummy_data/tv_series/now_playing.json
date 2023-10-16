@@ -1,0 +1,29 @@
+{
+    "page": 1,
+    "results": [
+        {
+            "backdrop_path": "/path.jpg",
+            "first_air_date": "2023-10-15",
+            "genre_ids": [
+              1,
+              2,
+              3
+            ],
+            "id": 12,
+            "name": "name",
+            "origin_country": [
+              "id",
+              "en"
+            ],
+            "original_language": "original language",
+            "original_name": "original name",
+            "overview": "Overview",
+            "popularity": 22.1,
+            "poster_path": "/path.jpg",
+            "vote_average": 3,
+            "vote_count": 3
+          }
+    ],
+    "total_pages": 62,
+    "total_results": 1223
+  }

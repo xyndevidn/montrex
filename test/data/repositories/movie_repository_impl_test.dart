@@ -11,7 +11,7 @@ import 'package:montrex/domain/entities/movie.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
-import '../../dummy_data/dummy_objects.dart';
+import '../../dummy_data/movie/dummy_objects.dart';
 import '../../helpers/test_helper.mocks.dart';
 
 void main() {
@@ -348,7 +348,7 @@ void main() {
     });
   });
 
-  group('save watchlist', () {
+  group('save watchlist movie', () {
     test('should return success message when saving successful', () async {
       // arrange
       when(mockLocalDataSource.insertWatchlist(testMovieTable))
@@ -370,7 +370,7 @@ void main() {
     });
   });
 
-  group('remove watchlist', () {
+  group('remove watchlist movie', () {
     test('should return success message when remove successful', () async {
       // arrange
       when(mockLocalDataSource.removeWatchlist(testMovieTable))
@@ -392,7 +392,7 @@ void main() {
     });
   });
 
-  group('get watchlist status', () {
+  group('get watchlist status movie', () {
     test('should return watch status whether data is found', () async {
       // arrange
       const tId = 1;

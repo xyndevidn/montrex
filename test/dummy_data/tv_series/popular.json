@@ -1,0 +1,29 @@
+{
+    "page": 1,
+    "results": [
+      {
+        "backdrop_path": "/path.jpg",
+        "first_air_date": "2020-10-03",
+        "genre_ids": [
+          1,
+          2,
+          3
+        ],
+        "id": 20,
+        "name": "Jujutsu Kaisen",
+        "origin_country": [
+          "id",
+          "en"
+        ],
+        "original_language": "origial language",
+        "original_name": "original name",
+        "overview": "overview",
+        "popularity": 123.567,
+        "poster_path": "/path.jpg",
+        "vote_average": 1.2,
+        "vote_count": 2200
+      }
+    ],
+    "total_pages": 7863,
+    "total_results": 157250
+  }

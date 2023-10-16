@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
-import 'package:montrex/data/datasources/movie_local_data_source.dart';
-import 'package:montrex/data/datasources/movie_remote_data_source.dart';
+import 'package:montrex/data/datasources/movie/movie_local_data_source.dart';
+import 'package:montrex/data/datasources/movie/movie_remote_data_source.dart';
 import 'package:montrex/data/models/movie_table.dart';
 import 'package:montrex/domain/entities/movie.dart';
 import 'package:montrex/domain/entities/movie_detail.dart';

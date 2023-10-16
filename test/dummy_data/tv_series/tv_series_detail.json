@@ -1,0 +1,56 @@
+{
+  "adult": false,
+  "backdrop_path": "/x1Ml2ApDDAh67z9akERhoRyZ2vM.jpg",
+  "created_by": [],
+  "episode_run_time": [
+    30
+  ],
+  "first_air_date": "",
+  "genres": [],
+  "homepage": "http://www.cctv.com/teleplay/xjkt/2004-12-21/4482.shtml",
+  "id": 12,
+  "in_production": false,
+  "languages": [],
+  "last_air_date": null,
+  "last_episode_to_air": null,
+  "name": "汉武大帝",
+  "next_episode_to_air": null,
+  "networks": [
+    {
+      "id": 11,
+      "logo_path": "/ufmYwN934igUGuPaorjcfsg57IU.png",
+      "name": "CCTV",
+      "origin_country": "CN"
+    }
+  ],
+  "number_of_episodes": 58,
+  "number_of_seasons": 1,
+  "origin_country": [
+    "CN"
+  ],
+  "original_language": "zh",
+  "original_name": "汉武大帝",
+  "overview": "Han Wu Da Di, also released under the title The Emperor Han Wu in some countries, is a 2005 Chinese television series about the life of Emperor Wu of the Han Dynasty, and is based on the historical texts Records of the Grand Historian and Book of Han.",
+  "popularity": 1.037,
+  "poster_path": "/sg6tjBKBu62mC9uj2CJPoP0Zl2M.jpg",
+  "production_companies": [],
+  "production_countries": [],
+  "seasons": [
+    {
+      "air_date": null,
+      "episode_count": 58,
+      "id": 359465,
+      "name": "Season 1",
+      "overview": "",
+      "poster_path": null,
+      "season_number": 1,
+      "vote_average": 0
+    }
+  ],
+  "spoken_languages": [],
+  "status": "Ended",
+  "tagline": "",
+  "type": "Scripted",
+  "vote_average": 7.333,
+  "vote_count": 3
+}
