@@ -1,8 +1,8 @@
 import 'package:montrex/common/constants.dart';
 import 'package:montrex/common/state_enum.dart';
-import 'package:montrex/presentation/provider/movie/movie_search_notifier.dart';
-import 'package:montrex/presentation/widgets/movie_card_list.dart';
+import 'package:montrex/presentation/provider/tv_series/tv_series_search_notifier.dart';
 import 'package:flutter/material.dart';
+import 'package:montrex/presentation/widgets/tv_card_list.dart';
 import 'package:provider/provider.dart';
 
 class SearchTvSeriesPage extends StatelessWidget {
@@ -14,7 +14,7 @@ class SearchTvSeriesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Search'),
+        title: const Text('Search Tv Series'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -23,11 +23,11 @@ class SearchTvSeriesPage extends StatelessWidget {
           children: [
             TextField(
               onSubmitted: (query) {
-                Provider.of<MovieSearchNotifier>(context, listen: false)
-                    .fetchMovieSearch(query);
+                Provider.of<TvSeriesSearchNotifier>(context, listen: false)
+                    .fetchTvSeriesSearch(query);
               },
               decoration: const InputDecoration(
-                hintText: 'Search title',
+                hintText: 'Search Name',
                 prefixIcon: Icon(Icons.search),
                 border: OutlineInputBorder(),
               ),
@@ -38,7 +38,7 @@ class SearchTvSeriesPage extends StatelessWidget {
               'Search Result',
               style: kHeading6,
             ),
-            Consumer<MovieSearchNotifier>(
+            Consumer<TvSeriesSearchNotifier>(
               builder: (context, data, child) {
                 if (data.state == RequestState.loading) {
                   return const Center(
@@ -50,8 +50,8 @@ class SearchTvSeriesPage extends StatelessWidget {
                     child: ListView.builder(
                       padding: const EdgeInsets.all(8),
                       itemBuilder: (context, index) {
-                        final movie = data.searchResult[index];
-                        return MovieCard(movie);
+                        final tvSeries = data.searchResult[index];
+                        return TvSeriesCard(tvSeries);
                       },
                       itemCount: result.length,
                     ),
