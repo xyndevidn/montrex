@@ -58,13 +58,6 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
               },
             ),
             ListTile(
-              leading: const Icon(Icons.save_alt),
-              title: const Text('Watchlist'),
-              onTap: () {
-                Navigator.pushNamed(context, WatchlistMoviesPage.ROUTE_NAME);
-              },
-            ),
-            ListTile(
               onTap: () {
                 Navigator.pushNamed(context, AboutPage.ROUTE_NAME);
               },
@@ -82,6 +75,12 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
               Navigator.pushNamed(context, SearchMoviePage.ROUTE_NAME);
             },
             icon: const Icon(Icons.search),
+          ),
+          IconButton(
+            onPressed: () {
+              Navigator.pushNamed(context, WatchlistMoviesPage.ROUTE_NAME);
+            },
+            icon: const Icon(Icons.bookmark),
           )
         ],
       ),

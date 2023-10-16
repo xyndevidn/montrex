@@ -4,6 +4,7 @@ import 'package:montrex/common/constants.dart';
 import 'package:montrex/common/state_enum.dart';
 import 'package:montrex/domain/entities/tv_series.dart';
 import 'package:montrex/presentation/pages/about_page.dart';
+import 'package:montrex/presentation/pages/tv_series/now_playing_tv_series_page.dart';
 import 'package:montrex/presentation/pages/tv_series/popular_tv_series_page.dart';
 import 'package:montrex/presentation/pages/tv_series/search_tv_series_page.dart';
 import 'package:montrex/presentation/pages/tv_series/top_rated_tv_series_page.dart';
@@ -58,13 +59,6 @@ class _HomeTvSeriesPageState extends State<HomeTvSeriesPage> {
               },
             ),
             ListTile(
-              leading: const Icon(Icons.save_alt),
-              title: const Text('Watchlist'),
-              onTap: () {
-                Navigator.pushNamed(context, WatchListTvSeriesPage.ROUTE_NAME);
-              },
-            ),
-            ListTile(
               onTap: () {
                 Navigator.pushNamed(context, AboutPage.ROUTE_NAME);
               },
@@ -82,6 +76,12 @@ class _HomeTvSeriesPageState extends State<HomeTvSeriesPage> {
               Navigator.pushNamed(context, SearchTvSeriesPage.ROUTE_NAME);
             },
             icon: const Icon(Icons.search),
+          ),
+          IconButton(
+            onPressed: () {
+              Navigator.pushNamed(context, WatchListTvSeriesPage.ROUTE_NAME);
+            },
+            icon: const Icon(Icons.bookmark),
           )
         ],
       ),
@@ -91,9 +91,10 @@ class _HomeTvSeriesPageState extends State<HomeTvSeriesPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Now Playing',
-                style: kHeading6,
+              _buildSubHeading(
+                title: 'Now Playing',
+                onTap: () => Navigator.pushNamed(
+                    context, NowPlayingTvSeriesPage.ROUTE_NAME),
               ),
               Consumer<TvSeriesListNotifier>(builder: (context, data, child) {
                 final state = data.nowPlayingState;

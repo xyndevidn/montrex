@@ -35,6 +35,7 @@ import 'package:montrex/presentation/provider/movie/movie_search_notifier.dart';
 import 'package:montrex/presentation/provider/movie/popular_movies_notifier.dart';
 import 'package:montrex/presentation/provider/movie/top_rated_movies_notifier.dart';
 import 'package:montrex/presentation/provider/movie/watchlist_movie_notifier.dart';
+import 'package:montrex/presentation/provider/tv_series/now_playing_tv_series_notifier.dart';
 import 'package:montrex/presentation/provider/tv_series/popular_tv_series_notifier.dart';
 import 'package:montrex/presentation/provider/tv_series/top_rated_tv_series_notifier.dart';
 import 'package:montrex/presentation/provider/tv_series/tv_series_detail_notifier.dart';
@@ -103,6 +104,11 @@ void init() {
   locator.registerFactory(
     () => TvSeriesSearchNotifier(
       searchTvSeries: locator(),
+    ),
+  );
+  locator.registerFactory(
+    () => NowPlayingTvSeriesNotifier(
+      locator(),
     ),
   );
   locator.registerFactory(

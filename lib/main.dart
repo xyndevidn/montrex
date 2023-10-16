@@ -10,6 +10,7 @@ import 'package:montrex/presentation/pages/movie/watchlist_movies_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:montrex/presentation/pages/tv_series/home_tv_series_page.dart';
+import 'package:montrex/presentation/pages/tv_series/now_playing_tv_series_page.dart';
 import 'package:montrex/presentation/pages/tv_series/search_tv_series_page.dart';
 import 'package:montrex/presentation/pages/tv_series/popular_tv_series_page.dart';
 import 'package:montrex/presentation/pages/tv_series/top_rated_tv_series_page.dart';
@@ -21,6 +22,7 @@ import 'package:montrex/presentation/provider/movie/movie_search_notifier.dart';
 import 'package:montrex/presentation/provider/movie/popular_movies_notifier.dart';
 import 'package:montrex/presentation/provider/movie/top_rated_movies_notifier.dart';
 import 'package:montrex/presentation/provider/movie/watchlist_movie_notifier.dart';
+import 'package:montrex/presentation/provider/tv_series/now_playing_tv_series_notifier.dart';
 import 'package:montrex/presentation/provider/tv_series/popular_tv_series_notifier.dart';
 import 'package:montrex/presentation/provider/tv_series/top_rated_tv_series_notifier.dart';
 import 'package:montrex/presentation/provider/tv_series/tv_series_detail_notifier.dart';
@@ -72,6 +74,9 @@ class MyApp extends StatelessWidget {
           create: (_) => di.locator<TvSeriesSearchNotifier>(),
         ),
         ChangeNotifierProvider(
+          create: (_) => di.locator<NowPlayingTvSeriesNotifier>(),
+        ),
+        ChangeNotifierProvider(
           create: (_) => di.locator<TopRatedTvSeriesNotifier>(),
         ),
         ChangeNotifierProvider(
@@ -118,6 +123,9 @@ class MyApp extends StatelessWidget {
             case '/home-tv':
               return MaterialPageRoute(
                   builder: (_) => const HomeTvSeriesPage());
+            case NowPlayingTvSeriesPage.ROUTE_NAME:
+              return CupertinoPageRoute(
+                  builder: (_) => const NowPlayingTvSeriesPage());
             case PopularTvSeriesPage.ROUTE_NAME:
               return CupertinoPageRoute(
                   builder: (_) => const PopularTvSeriesPage());
