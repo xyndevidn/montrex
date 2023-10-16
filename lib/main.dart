@@ -3,13 +3,12 @@ import 'package:montrex/common/utils.dart';
 import 'package:montrex/presentation/pages/about_page.dart';
 import 'package:montrex/presentation/pages/movie/search_movie_page.dart';
 import 'package:montrex/presentation/pages/movie/movie_detail_page.dart';
-import 'package:montrex/presentation/pages/movie/home_movie_page.dart';
+import 'package:montrex/presentation/pages/home_page.dart';
 import 'package:montrex/presentation/pages/movie/popular_movies_page.dart';
 import 'package:montrex/presentation/pages/movie/top_rated_movies_page.dart';
 import 'package:montrex/presentation/pages/movie/watchlist_movies_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:montrex/presentation/pages/tv_series/home_tv_series_page.dart';
 import 'package:montrex/presentation/pages/tv_series/now_playing_tv_series_page.dart';
 import 'package:montrex/presentation/pages/tv_series/search_tv_series_page.dart';
 import 'package:montrex/presentation/pages/tv_series/popular_tv_series_page.dart';
@@ -94,13 +93,15 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: kRichBlack,
           textTheme: kTextTheme,
         ),
-        home: const HomeMoviePage(),
+        home: const HomePage(),
         navigatorObservers: [routeObserver],
         onGenerateRoute: (RouteSettings settings) {
           switch (settings.name) {
-            // Movie
             case '/home':
-              return MaterialPageRoute(builder: (_) => const HomeMoviePage());
+              return MaterialPageRoute(builder: (_) => const HomePage());
+            case AboutPage.ROUTE_NAME:
+              return MaterialPageRoute(builder: (_) => const AboutPage());
+            // Movie
             case PopularMoviesPage.ROUTE_NAME:
               return CupertinoPageRoute(
                   builder: (_) => const PopularMoviesPage());
@@ -120,9 +121,6 @@ class MyApp extends StatelessWidget {
               return CupertinoPageRoute(
                   builder: (_) => const SearchMoviePage());
             // Tv Series
-            case '/home-tv':
-              return MaterialPageRoute(
-                  builder: (_) => const HomeTvSeriesPage());
             case NowPlayingTvSeriesPage.ROUTE_NAME:
               return CupertinoPageRoute(
                   builder: (_) => const NowPlayingTvSeriesPage());
@@ -144,8 +142,6 @@ class MyApp extends StatelessWidget {
             case WatchListTvSeriesPage.ROUTE_NAME:
               return MaterialPageRoute(
                   builder: (_) => const WatchListTvSeriesPage());
-            case AboutPage.ROUTE_NAME:
-              return MaterialPageRoute(builder: (_) => const AboutPage());
             default:
               return MaterialPageRoute(builder: (_) {
                 return const Scaffold(
