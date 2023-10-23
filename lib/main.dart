@@ -2,8 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:core/core.dart';
 import 'package:about/about.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:montrex/injection.dart' as di;
+import 'package:search/presentation/bloc/search_movie_bloc/search_movie_bloc.dart';
 import 'package:search/presentation/pages/movie/search_movie_page.dart';
 import 'package:core/presentation/pages/movie/movie_detail_page.dart';
 import 'package:core/presentation/pages/home_page.dart';
@@ -51,6 +53,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => di.locator<MovieSearchNotifier>(),
+        ),
+        BlocProvider(
+          create: (_) => di.locator<SearchMovieBloc>(),
         ),
         ChangeNotifierProvider(
           create: (_) => di.locator<TopRatedMoviesNotifier>(),

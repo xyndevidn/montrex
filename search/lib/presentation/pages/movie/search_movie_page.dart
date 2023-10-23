@@ -1,10 +1,13 @@
-import '../../provider/movie/movie_search_notifier.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../bloc/search_movie_bloc/search_movie_bloc.dart';
+// import '../../provider/movie/movie_search_notifier.dart';
 import 'package:core/presentation/widgets/movie_card_list.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+// import 'package:provider/provider.dart';
 
 import 'package:core/styles/text_styles.dart';
-import 'package:core/utils/state_enum.dart';
+// import 'package:core/utils/state_enum.dart';
 
 class SearchMoviePage extends StatelessWidget {
   static const routeName = '/search-movie';
@@ -23,10 +26,15 @@ class SearchMoviePage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextField(
-              onSubmitted: (query) {
-                Provider.of<MovieSearchNotifier>(context, listen: false)
-                    .fetchMovieSearch(query);
+              // todo BLOC
+              onChanged: (query) {
+                context.read<SearchMovieBloc>().add(OnQueryChanged(query));
               },
+              // todo Provider
+              // onSubmitted: (query) {
+              //   Provider.of<MovieSearchNotifier>(context, listen: false)
+              //       .fetchMovieSearch(query);
+              // },
               decoration: const InputDecoration(
                 hintText: 'Search title',
                 prefixIcon: Icon(Icons.search),
@@ -39,22 +47,56 @@ class SearchMoviePage extends StatelessWidget {
               'Search Result',
               style: kHeading6,
             ),
-            Consumer<MovieSearchNotifier>(
-              builder: (context, data, child) {
-                if (data.state == RequestState.loading) {
+
+            // todo PROVIDER
+            // Consumer<MovieSearchNotifier>(
+            //   builder: (context, data, child) {
+            //     if (data.state == RequestState.loading) {
+            //       return const Center(
+            //         child: CircularProgressIndicator(),
+            //       );
+            //     } else if (data.state == RequestState.loaded) {
+            //       final result = data.searchResult;
+            //       return Expanded(
+            //         child: ListView.builder(
+            //           padding: const EdgeInsets.all(8),
+            //           itemBuilder: (context, index) {
+            //             final movie = data.searchResult[index];
+            //             return MovieCard(movie);
+            //           },
+            //           itemCount: result.length,
+            //         ),
+            //       );
+            //     } else {
+            //       return Expanded(
+            //         child: Container(),
+            //       );
+            //     }
+            //   },
+            // ),
+            // todo BLOC
+            BlocBuilder<SearchMovieBloc, SearchMovieState>(
+              builder: (context, state) {
+                if (state is SearchMovieLoading) {
                   return const Center(
                     child: CircularProgressIndicator(),
                   );
-                } else if (data.state == RequestState.loaded) {
-                  final result = data.searchResult;
+                } else if (state is SearchMovieHasData) {
+                  final result = state.result;
                   return Expanded(
                     child: ListView.builder(
                       padding: const EdgeInsets.all(8),
                       itemBuilder: (context, index) {
-                        final movie = data.searchResult[index];
+                        final movie = result[index];
                         return MovieCard(movie);
                       },
                       itemCount: result.length,
+                    ),
+                  );
+                } else if (state is SearchMovieError) {
+                  return Expanded(
+                    child: Center(
+                      child: Text(state.message),
                     ),
                   );
                 } else {

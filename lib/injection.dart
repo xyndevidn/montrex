@@ -31,6 +31,7 @@ import 'package:core/domain/usecases/tv_series/save_watchlist_tv_series.dart';
 import 'package:search/domain/usecases/tv_series/search_tv_series.dart';
 import 'package:core/presentation/provider/movie/movie_detail_notifier.dart';
 import 'package:core/presentation/provider/movie/movie_list_notifier.dart';
+import 'package:search/presentation/bloc/search_movie_bloc/search_movie_bloc.dart';
 import 'package:search/presentation/provider/movie/movie_search_notifier.dart';
 import 'package:core/presentation/provider/movie/popular_movies_notifier.dart';
 import 'package:core/presentation/provider/movie/top_rated_movies_notifier.dart';
@@ -63,11 +64,21 @@ void init() {
       removeWatchlist: locator(),
     ),
   );
+
+  // todo Provider
   locator.registerFactory(
     () => MovieSearchNotifier(
       searchMovies: locator(),
     ),
   );
+
+  // todo BLOC
+  locator.registerFactory(
+    () => SearchMovieBloc(
+      locator(),
+    ),
+  );
+
   locator.registerFactory(
     () => PopularMoviesNotifier(
       locator(),
