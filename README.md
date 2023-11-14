@@ -1,6 +1,6 @@
 # montrex
 
-[![Codemagic build status](https://api.codemagic.io/apps/6553ffb503fc424fb2723c30/6553ffb503fc424fb2723c2f/status_badge.svg)](https://codemagic.io/apps/6553ffb503fc424fb2723c30/6553ffb503fc424fb2723c2f/latest_build)
+[![Codemagic build status](https://api.codemagic.io/apps/6553ffb503fc424fb2723c30/release-workflow/status_badge.svg)](https://codemagic.io/apps/6553ffb503fc424fb2723c30/release-workflow/latest_build)
 
 
 A new Flutter project.
