@@ -1,7 +1,11 @@
 import 'package:core/common/styles/color.dart';
 import 'package:core/common/styles/text_style.dart';
 import 'package:core/common/utils.dart';
+import 'package:core/common/routes.dart';
 import 'package:about/about_page.dart';
+import 'package:core/presentation/blocs/movie/now_playing_movies/now_playing_movies_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:core/presentation/blocs/movie/popular_movies/popular_movies_bloc.dart';
 import 'package:core/presentation/pages/movie/search_movie_page.dart';
 import 'package:core/presentation/pages/movie/movie_detail_page.dart';
 import 'package:core/presentation/pages/home_page.dart';
@@ -19,7 +23,6 @@ import 'package:core/presentation/pages/tv_series/watchlist_tv_series_page.dart'
 import 'package:core/presentation/provider/movie/movie_detail_notifier.dart';
 import 'package:core/presentation/provider/movie/movie_list_notifier.dart';
 import 'package:core/presentation/provider/movie/movie_search_notifier.dart';
-import 'package:core/presentation/provider/movie/popular_movies_notifier.dart';
 import 'package:core/presentation/provider/movie/top_rated_movies_notifier.dart';
 import 'package:core/presentation/provider/movie/watchlist_movie_notifier.dart';
 import 'package:core/presentation/provider/tv_series/now_playing_tv_series_notifier.dart';
@@ -44,6 +47,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        // Bloc Movie
+        BlocProvider(
+          create: (_) => di.locator<NowPlayingMoviesBloc>(),
+        ),
+        BlocProvider(
+          create: (_) => di.locator<PopularMoviesBloc>(),
+        ),
         // Provider Movie
         ChangeNotifierProvider(
           create: (_) => di.locator<MovieListNotifier>(),
@@ -56,9 +66,6 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => di.locator<TopRatedMoviesNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<PopularMoviesNotifier>(),
         ),
         ChangeNotifierProvider(
           create: (_) => di.locator<WatchlistMovieNotifier>(),
@@ -103,8 +110,8 @@ class MyApp extends StatelessWidget {
             case AboutPage.routeName:
               return MaterialPageRoute(builder: (_) => const AboutPage());
             // Movie
-            case PopularMoviesPage.routeName:
-              return CupertinoPageRoute(
+            case popularMoviesRoute:
+              return MaterialPageRoute(
                   builder: (_) => const PopularMoviesPage());
             case TopRatedMoviesPage.routeName:
               return CupertinoPageRoute(

@@ -1,17 +1,20 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
 import '../../../common/constants.dart';
+import '../../../common/routes.dart';
 import '../../../common/styles/text_style.dart';
 import '../../../domain/entities/movie.dart';
 import '../../../presentation/pages/movie/movie_detail_page.dart';
-import '../../../presentation/pages/movie/popular_movies_page.dart';
 import '../../../presentation/pages/movie/search_movie_page.dart';
 import '../../../presentation/pages/movie/top_rated_movies_page.dart';
 import '../../../presentation/pages/movie/watchlist_movies_page.dart';
 import '../../../presentation/provider/movie/movie_list_notifier.dart';
 import '../../../common/state_enum.dart';
+import '../../blocs/movie/now_playing_movies/now_playing_movies_bloc.dart';
+import '../../blocs/movie/popular_movies/popular_movies_bloc.dart';
 
 class MovieListPage extends StatefulWidget {
   const MovieListPage({super.key});
@@ -24,11 +27,13 @@ class _MovieListPageState extends State<MovieListPage> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(
-        () => Provider.of<MovieListNotifier>(context, listen: false)
-          ..fetchNowPlayingMovies()
-          ..fetchPopularMovies()
-          ..fetchTopRatedMovies());
+
+    Future.microtask(() {
+      context.read<NowPlayingMoviesBloc>().add(FetchNowPlayingMovies());
+      context.read<PopularMoviesBloc>().add(FetchPopularMovies());
+      Provider.of<MovieListNotifier>(context, listen: false)
+          .fetchTopRatedMovies();
+    });
   }
 
   @override
@@ -61,35 +66,36 @@ class _MovieListPageState extends State<MovieListPage> {
                 'Now Playing',
                 style: kHeading6,
               ),
-              Consumer<MovieListNotifier>(builder: (context, data, child) {
-                final state = data.nowPlayingState;
-                if (state == RequestState.loading) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (state == RequestState.loaded) {
-                  return MovieList(data.nowPlayingMovies);
-                } else {
-                  return const Text('Failed');
-                }
-              }),
+              BlocBuilder<NowPlayingMoviesBloc, NowPlayingMoviesState>(
+                builder: (_, state) {
+                  if (state is NowPlayingMoviesLoading) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (state is NowPlayingMoviesHasData) {
+                    return MovieList(state.result);
+                  } else {
+                    return const Text('Failed');
+                  }
+                },
+              ),
               _buildSubHeading(
                 title: 'Popular',
-                onTap: () =>
-                    Navigator.pushNamed(context, PopularMoviesPage.routeName),
+                onTap: () => Navigator.pushNamed(context, popularMoviesRoute),
               ),
-              Consumer<MovieListNotifier>(builder: (context, data, child) {
-                final state = data.popularMoviesState;
-                if (state == RequestState.loading) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (state == RequestState.loaded) {
-                  return MovieList(data.popularMovies);
-                } else {
-                  return const Text('Failed');
-                }
-              }),
+              BlocBuilder<PopularMoviesBloc, PopularMoviesState>(
+                builder: (_, state) {
+                  if (state is PopularMoviesLoading) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (state is PopularMoviesHasData) {
+                    return MovieList(state.result);
+                  } else {
+                    return const Text('Failed');
+                  }
+                },
+              ),
               _buildSubHeading(
                 title: 'Top Rated',
                 onTap: () =>
@@ -155,6 +161,7 @@ class MovieList extends StatelessWidget {
           return Container(
             padding: const EdgeInsets.all(8),
             child: InkWell(
+              key: const Key('movieItem'),
               onTap: () {
                 Navigator.pushNamed(
                   context,

@@ -109,6 +109,7 @@ class DetailContent extends StatelessWidget {
                               style: kHeading5,
                             ),
                             ElevatedButton(
+                              key: const Key('watchlistButton'),
                               onPressed: () async {
                                 if (!isAddedWatchlist) {
                                   await Provider.of<MovieDetailNotifier>(
@@ -274,6 +275,7 @@ class DetailContent extends StatelessWidget {
             backgroundColor: kRichBlack,
             foregroundColor: Colors.white,
             child: IconButton(
+              key: const Key('iconBack'),
               icon: const Icon(Icons.arrow_back),
               onPressed: () {
                 Navigator.pop(context);
