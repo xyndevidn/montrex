@@ -154,7 +154,7 @@ class MovieList extends StatelessWidget {
           return Container(
             padding: const EdgeInsets.all(8),
             child: InkWell(
-              key: const Key('movieItem'),
+              key: const Key('movieInkWell'),
               onTap: () {
                 Navigator.pushNamed(
                   context,

@@ -1,27 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../common/state_enum.dart';
 import '../../../common/utils.dart';
-import '../../../presentation/provider/tv_series/watchlist_tv_series_notifier.dart';
 import '../../../presentation/widgets/tv_card_list.dart';
+import '../../blocs/tv_series/watchlist_tv_series/watchlist_tv_series_bloc.dart';
 
-class WatchListTvSeriesPage extends StatefulWidget {
-  static const routeName = '/watchlist-tv';
-  const WatchListTvSeriesPage({super.key});
+class WatchlistTvSeriesPage extends StatefulWidget {
+  const WatchlistTvSeriesPage({super.key});
 
   @override
-  State<WatchListTvSeriesPage> createState() => _WatchListTvSeriesPageState();
+  State<WatchlistTvSeriesPage> createState() => _WatchlistTvSeriesPageState();
 }
 
-class _WatchListTvSeriesPageState extends State<WatchListTvSeriesPage>
+class _WatchlistTvSeriesPageState extends State<WatchlistTvSeriesPage>
     with RouteAware {
   @override
   void initState() {
     super.initState();
     Future.microtask(() =>
-        Provider.of<WatchlistTvSeriesNotifier>(context, listen: false)
-            .fetchWatchlistTvSeries());
+        context.read<WatchlistTvSeriesBloc>().add(FetchWatchlistTvSeries()));
   }
 
   @override
@@ -32,8 +29,7 @@ class _WatchListTvSeriesPageState extends State<WatchListTvSeriesPage>
 
   @override
   void didPopNext() {
-    Provider.of<WatchlistTvSeriesNotifier>(context, listen: false)
-        .fetchWatchlistTvSeries();
+    context.read<WatchlistTvSeriesBloc>().add(FetchWatchlistTvSeries());
   }
 
   @override
@@ -41,27 +37,48 @@ class _WatchListTvSeriesPageState extends State<WatchListTvSeriesPage>
     return Scaffold(
       appBar: AppBar(
         title: const Text('Watchlist Tv Series'),
+        leading: IconButton(
+          key: const Key('iconBack'),
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Consumer<WatchlistTvSeriesNotifier>(
-          builder: (context, data, child) {
-            if (data.watchlistState == RequestState.loading) {
+        child: BlocBuilder<WatchlistTvSeriesBloc, WatchlistTvSeriesState>(
+          builder: (_, state) {
+            if (state is WatchlistTvSeriesLoading) {
               return const Center(
                 child: CircularProgressIndicator(),
               );
-            } else if (data.watchlistState == RequestState.loaded) {
+            } else if (state is WatchlistTvSeriesHasData) {
               return ListView.builder(
                 itemBuilder: (context, index) {
-                  final tvSeries = data.watchlistTvSeries[index];
+                  final tvSeries = state.result[index];
                   return TvSeriesCard(tvSeries);
                 },
-                itemCount: data.watchlistTvSeries.length,
+                itemCount: state.result.length,
               );
-            } else {
+            } else if (state is WatchlistTvSeriesError) {
               return Center(
                 key: const Key('error_message'),
-                child: Text(data.message),
+                child: Text(state.message),
+              );
+            } else {
+              return const Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.visibility_off,
+                      size: 32,
+                    ),
+                    SizedBox(height: 2),
+                    Text('Empty Watchlist'),
+                  ],
+                ),
               );
             }
           },

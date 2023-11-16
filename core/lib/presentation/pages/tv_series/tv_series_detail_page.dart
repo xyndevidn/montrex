@@ -39,7 +39,6 @@ class _TvSeriesDetailPageState extends State<TvSeriesDetailPage> {
       body: BlocConsumer<DetailTvSeriesBloc, DetailTvSeriesState>(
         listener: (context, state) {
           final message = state.watchlistMessage;
-          debugPrint('MESSAGE : $message');
           if (message == DetailTvSeriesBloc.watchlistAddSuccessMessage ||
               message == DetailTvSeriesBloc.watchlistRemoveSuccessMessage) {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -139,6 +138,7 @@ class DetailContent extends StatelessWidget {
                               style: kHeading5,
                             ),
                             ElevatedButton(
+                              key: const Key('watchlistButton'),
                               onPressed: () async {
                                 if (!isAddedWatchlist) {
                                   context
@@ -312,6 +312,7 @@ class DetailContent extends StatelessWidget {
             backgroundColor: kRichBlack,
             foregroundColor: Colors.white,
             child: IconButton(
+              key: const Key('iconBack'),
               icon: const Icon(Icons.arrow_back),
               onPressed: () {
                 Navigator.pop(context);

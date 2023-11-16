@@ -1,16 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter/material.dart';
 import '../../../common/constants.dart';
 import '../../../common/routes.dart';
-import '../../../common/state_enum.dart';
 import '../../../common/styles/text_style.dart';
 import '../../../domain/entities/tv_series.dart';
-import '../../../presentation/pages/tv_series/search_tv_series_page.dart';
 
-import '../../../presentation/pages/tv_series/watchlist_tv_series_page.dart';
-import '../../../presentation/provider/tv_series/tv_series_list_notifier.dart';
+import '../../blocs/tv_series/now_playing_tv_series/now_playing_tv_series_bloc.dart';
+import '../../blocs/tv_series/popular_tv_series/popular_tv_series_bloc.dart';
+import '../../blocs/tv_series/top_rated_tv_series/top_rated_tv_series_bloc.dart';
 
 class TvSeriesListPage extends StatefulWidget {
   const TvSeriesListPage({super.key});
@@ -23,11 +22,11 @@ class _TvSeriesListPageState extends State<TvSeriesListPage> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(
-        () => Provider.of<TvSeriesListNotifier>(context, listen: false)
-          ..fetchNowPlayingTvSeries()
-          ..fetchPopularTvSeries()
-          ..fetchTopRatedTvSeries());
+    Future.microtask(() {
+      context.read<NowPlayingTvSeriesBloc>().add(FetchNowPlayingTvSeries());
+      context.read<PopularTvSeriesBloc>().add(FetchPopularTvSeries());
+      context.read<TopRatedTvSeriesBloc>().add(FetchTopRatedTvSeries());
+    });
   }
 
   @override
@@ -38,13 +37,13 @@ class _TvSeriesListPageState extends State<TvSeriesListPage> {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.pushNamed(context, SearchTvSeriesPage.routeName);
+              Navigator.pushNamed(context, searchTvSeriesRoutes);
             },
             icon: const Icon(Icons.search),
           ),
           IconButton(
             onPressed: () {
-              Navigator.pushNamed(context, WatchListTvSeriesPage.routeName);
+              Navigator.pushNamed(context, watchlistTvSeriesRoutes);
             },
             icon: const Icon(Icons.bookmark),
           )
@@ -61,52 +60,55 @@ class _TvSeriesListPageState extends State<TvSeriesListPage> {
                 onTap: () =>
                     Navigator.pushNamed(context, nowPlayingTvSeriesRoutes),
               ),
-              Consumer<TvSeriesListNotifier>(builder: (context, data, child) {
-                final state = data.nowPlayingState;
-                if (state == RequestState.loading) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (state == RequestState.loaded) {
-                  return TvSeriesList(data.nowPlayingTvSeries);
-                } else {
-                  return const Text('Failed');
-                }
-              }),
+              BlocBuilder<NowPlayingTvSeriesBloc, NowPlayingTvSeriesState>(
+                builder: (_, state) {
+                  if (state is NowPlayingTvSeriesLoading) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (state is NowPlayingTvSeriesHasData) {
+                    return TvSeriesList(state.result);
+                  } else if (state is NowPlayingTvSeriesError) {
+                    return Center(child: Text(state.message));
+                  } else {
+                    return const Center(child: Text('Failed'));
+                  }
+                },
+              ),
               _buildSubHeading(
                 title: 'Popular',
                 onTap: () =>
                     Navigator.pushNamed(context, popularTvSeriesRoutes),
               ),
-              Consumer<TvSeriesListNotifier>(builder: (context, data, child) {
-                final state = data.popularTvSeriesState;
-                if (state == RequestState.loading) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (state == RequestState.loaded) {
-                  return TvSeriesList(data.popularTvSeries);
-                } else {
-                  return const Text('Failed');
-                }
-              }),
+              BlocBuilder<PopularTvSeriesBloc, PopularTvSeriesState>(
+                builder: (_, state) {
+                  if (state is PopularTvSeriesLoading) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (state is PopularTvSeriesHasData) {
+                    return TvSeriesList(state.result);
+                  } else if (state is PopularTvSeriesError) {
+                    return Center(child: Text(state.message));
+                  } else {
+                    return const Center(child: Text('Failed'));
+                  }
+                },
+              ),
               _buildSubHeading(
                 title: 'Top Rated',
                 onTap: () =>
                     Navigator.pushNamed(context, topRatedTvSeriesRoutes),
               ),
-              Consumer<TvSeriesListNotifier>(builder: (context, data, child) {
-                final state = data.topRatedTvSeriesState;
-                if (state == RequestState.loading) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (state == RequestState.loaded) {
-                  return TvSeriesList(data.topRatedTvSeries);
-                } else {
-                  return const Text('Failed');
-                }
-              }),
+              BlocBuilder<TopRatedTvSeriesBloc, TopRatedTvSeriesState>(
+                builder: (_, state) {
+                  if (state is TopRatedTvSeriesLoading) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (state is TopRatedTvSeriesHasData) {
+                    return TvSeriesList(state.result);
+                  } else if (state is TopRatedTvSeriesError) {
+                    return Center(child: Text(state.message));
+                  } else {
+                    return const Center(child: Text('Failed'));
+                  }
+                },
+              ),
             ],
           ),
         ),
@@ -155,6 +157,7 @@ class TvSeriesList extends StatelessWidget {
           return Container(
             padding: const EdgeInsets.all(8),
             child: InkWell(
+              key: const Key('tvSeriesInkWell'),
               onTap: () {
                 Navigator.pushNamed(
                   context,

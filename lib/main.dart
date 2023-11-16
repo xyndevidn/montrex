@@ -11,7 +11,10 @@ import 'package:core/presentation/blocs/movie/watchlist_movies/watchlist_movies_
 import 'package:core/presentation/blocs/tv_series/detail_tv_series/detail_tv_series_bloc.dart';
 import 'package:core/presentation/blocs/tv_series/now_playing_tv_series/now_playing_tv_series_bloc.dart';
 import 'package:core/presentation/blocs/tv_series/popular_tv_series/popular_tv_series_bloc.dart';
+import 'package:core/presentation/blocs/tv_series/search_tv_series/search_tv_series_bloc.dart';
 import 'package:core/presentation/blocs/tv_series/top_rated_tv_series/top_rated_tv_series_bloc.dart';
+import 'package:core/presentation/blocs/tv_series/watchlist_tv_series/watchlist_tv_series_bloc.dart';
+import 'package:core/presentation/pages/tv_series/watchlist_tv_series_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:core/presentation/blocs/movie/popular_movies/popular_movies_bloc.dart';
 import 'package:core/presentation/pages/movie/search_movie_page.dart';
@@ -27,10 +30,6 @@ import 'package:core/presentation/pages/tv_series/search_tv_series_page.dart';
 import 'package:core/presentation/pages/tv_series/popular_tv_series_page.dart';
 import 'package:core/presentation/pages/tv_series/top_rated_tv_series_page.dart';
 import 'package:core/presentation/pages/tv_series/tv_series_detail_page.dart';
-import 'package:core/presentation/pages/tv_series/watchlist_tv_series_page.dart';
-import 'package:core/presentation/provider/tv_series/tv_series_list_notifier.dart';
-import 'package:core/presentation/provider/tv_series/tv_series_search_notifier.dart';
-import 'package:core/presentation/provider/tv_series/watchlist_tv_series_notifier.dart';
 import 'package:provider/provider.dart';
 import 'package:montrex/injection.dart' as di;
 
@@ -78,15 +77,11 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (_) => di.locator<DetailTvSeriesBloc>(),
         ),
-        // Provider Tv Series
-        ChangeNotifierProvider(
-          create: (_) => di.locator<TvSeriesListNotifier>(),
+        BlocProvider(
+          create: (_) => di.locator<SearchTvSeriesBloc>(),
         ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<TvSeriesSearchNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<WatchlistTvSeriesNotifier>(),
+        BlocProvider(
+          create: (_) => di.locator<WatchlistTvSeriesBloc>(),
         ),
       ],
       child: MaterialApp(
@@ -140,12 +135,12 @@ class MyApp extends StatelessWidget {
                 builder: (_) => TvSeriesDetailPage(id: id),
                 settings: settings,
               );
-            case SearchTvSeriesPage.routeName:
+            case searchTvSeriesRoutes:
               return CupertinoPageRoute(
                   builder: (_) => const SearchTvSeriesPage());
-            case WatchListTvSeriesPage.routeName:
+            case watchlistTvSeriesRoutes:
               return MaterialPageRoute(
-                  builder: (_) => const WatchListTvSeriesPage());
+                  builder: (_) => const WatchlistTvSeriesPage());
             default:
               return MaterialPageRoute(
                 builder: (_) {

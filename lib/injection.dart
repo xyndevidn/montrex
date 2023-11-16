@@ -36,10 +36,9 @@ import 'package:core/presentation/blocs/movie/watchlist_movies/watchlist_movies_
 import 'package:core/presentation/blocs/tv_series/detail_tv_series/detail_tv_series_bloc.dart';
 import 'package:core/presentation/blocs/tv_series/now_playing_tv_series/now_playing_tv_series_bloc.dart';
 import 'package:core/presentation/blocs/tv_series/popular_tv_series/popular_tv_series_bloc.dart';
+import 'package:core/presentation/blocs/tv_series/search_tv_series/search_tv_series_bloc.dart';
 import 'package:core/presentation/blocs/tv_series/top_rated_tv_series/top_rated_tv_series_bloc.dart';
-import 'package:core/presentation/provider/tv_series/tv_series_list_notifier.dart';
-import 'package:core/presentation/provider/tv_series/tv_series_search_notifier.dart';
-import 'package:core/presentation/provider/tv_series/watchlist_tv_series_notifier.dart';
+import 'package:core/presentation/blocs/tv_series/watchlist_tv_series/watchlist_tv_series_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'package:get_it/get_it.dart';
 
@@ -68,6 +67,8 @@ void init() {
   locator.registerFactory(() => NowPlayingTvSeriesBloc(locator()));
   locator.registerFactory(() => PopularTvSeriesBloc(locator()));
   locator.registerFactory(() => TopRatedTvSeriesBloc(locator()));
+  locator.registerFactory(() => SearchTvSeriesBloc(locator()));
+  locator.registerFactory(() => WatchlistTvSeriesBloc(locator()));
   locator.registerFactory(
     () => DetailTvSeriesBloc(
       getTvSeriesDetail: locator(),
@@ -75,28 +76,6 @@ void init() {
       getWatchListTvSeriesStatus: locator(),
       saveWatchlistTvSeries: locator(),
       removeWatchlistTvSeries: locator(),
-    ),
-  );
-
-  // provider Tv Series
-
-  locator.registerFactory(
-    () => TvSeriesListNotifier(
-      getNowPlayingTvSeries: locator(),
-      getPopularTvSeries: locator(),
-      getTopRatedTvSeries: locator(),
-    ),
-  );
-
-  locator.registerFactory(
-    () => TvSeriesSearchNotifier(
-      searchTvSeries: locator(),
-    ),
-  );
-
-  locator.registerFactory(
-    () => WatchlistTvSeriesNotifier(
-      getWatchlistTvSeries: locator(),
     ),
   );
 
