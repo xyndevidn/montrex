@@ -26,7 +26,7 @@ void main() {
       });
   });
 
-  final tTvSeriesist = <TvSeries>[testTvSerives];
+  final tTvSeriesist = <TvSeries>[testTvSeries];
   const tQuery = 'jujutsu';
 
   group('search tv series', () {

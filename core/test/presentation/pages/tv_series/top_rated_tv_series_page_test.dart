@@ -1,49 +1,60 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
-import 'package:core/common/state_enum.dart';
-import 'package:core/domain/entities/tv_series.dart';
+import 'package:bloc_test/bloc_test.dart';
+import 'package:core/presentation/blocs/tv_series/top_rated_tv_series/top_rated_tv_series_bloc.dart';
 import 'package:core/presentation/pages/tv_series/top_rated_tv_series_page.dart';
-import 'package:core/presentation/provider/tv_series/top_rated_tv_series_notifier.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
 
-import 'top_rated_tv_series_page_test.mocks.dart';
+import '../../../dummy_data/tv_series/dummy_objects.dart';
 
-@GenerateMocks([TopRatedTvSeriesNotifier])
+class MockTopRatedTvSeriesBloc
+    extends MockBloc<TopRatedTvSeriesEvent, TopRatedTvSeriesState>
+    implements TopRatedTvSeriesBloc {}
+
+class FakeTopRatedTvSeriesEvent extends Fake implements TopRatedTvSeriesEvent {}
+
+class FakeTopRatedTvSeriesState extends Fake implements TopRatedTvSeriesState {}
+
 void main() {
-  late MockTopRatedTvSeriesNotifier mockNotifier;
+  late MockTopRatedTvSeriesBloc mockTopRatedTvSeriesBloc;
+
+  setUpAll(() {
+    registerFallbackValue(FakeTopRatedTvSeriesEvent());
+    registerFallbackValue(FakeTopRatedTvSeriesState());
+  });
 
   setUp(() {
-    mockNotifier = MockTopRatedTvSeriesNotifier();
+    mockTopRatedTvSeriesBloc = MockTopRatedTvSeriesBloc();
   });
 
   Widget makeTestableWidget(Widget body) {
-    return ChangeNotifierProvider<TopRatedTvSeriesNotifier>.value(
-      value: mockNotifier,
+    return BlocProvider<TopRatedTvSeriesBloc>.value(
+      value: mockTopRatedTvSeriesBloc,
       child: MaterialApp(
         home: body,
       ),
     );
   }
 
-  testWidgets('Page should display progress bar when loading',
+  testWidgets('Page should display center progress bar when loading',
       (WidgetTester tester) async {
-    when(mockNotifier.state).thenReturn(RequestState.loading);
+    when(() => mockTopRatedTvSeriesBloc.state)
+        .thenReturn(TopRatedTvSeriesLoading());
 
-    final progressFinder = find.byType(CircularProgressIndicator);
+    final progressBarFinder = find.byType(CircularProgressIndicator);
     final centerFinder = find.byType(Center);
 
     await tester.pumpWidget(makeTestableWidget(const TopRatedTvSeriesPage()));
 
     expect(centerFinder, findsOneWidget);
-    expect(progressFinder, findsOneWidget);
+    expect(progressBarFinder, findsOneWidget);
   });
 
-  testWidgets('Page should display when data is loaded',
+  testWidgets('Page should display ListView when data is loaded',
       (WidgetTester tester) async {
-    when(mockNotifier.state).thenReturn(RequestState.loaded);
-    when(mockNotifier.tvSeries).thenReturn(<TvSeries>[]);
+    when(() => mockTopRatedTvSeriesBloc.state)
+        .thenReturn(TopRatedTvSeriesHasData([testTvSeries]));
 
     final listViewFinder = find.byType(ListView);
 
@@ -54,8 +65,8 @@ void main() {
 
   testWidgets('Page should display text with message when Error',
       (WidgetTester tester) async {
-    when(mockNotifier.state).thenReturn(RequestState.error);
-    when(mockNotifier.message).thenReturn('Error message');
+    when(() => mockTopRatedTvSeriesBloc.state)
+        .thenReturn(TopRatedTvSeriesError('Error message'));
 
     final textFinder = find.byKey(const Key('error_message'));
 

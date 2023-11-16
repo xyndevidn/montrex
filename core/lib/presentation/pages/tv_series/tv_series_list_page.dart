@@ -3,14 +3,12 @@ import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
 import '../../../common/constants.dart';
+import '../../../common/routes.dart';
 import '../../../common/state_enum.dart';
 import '../../../common/styles/text_style.dart';
 import '../../../domain/entities/tv_series.dart';
-import '../../../presentation/pages/tv_series/now_playing_tv_series_page.dart';
-import '../../../presentation/pages/tv_series/popular_tv_series_page.dart';
 import '../../../presentation/pages/tv_series/search_tv_series_page.dart';
-import '../../../presentation/pages/tv_series/top_rated_tv_series_page.dart';
-import '../../../presentation/pages/tv_series/tv_series_detail_page.dart';
+
 import '../../../presentation/pages/tv_series/watchlist_tv_series_page.dart';
 import '../../../presentation/provider/tv_series/tv_series_list_notifier.dart';
 
@@ -60,8 +58,8 @@ class _TvSeriesListPageState extends State<TvSeriesListPage> {
             children: [
               _buildSubHeading(
                 title: 'Now Playing',
-                onTap: () => Navigator.pushNamed(
-                    context, NowPlayingTvSeriesPage.routeName),
+                onTap: () =>
+                    Navigator.pushNamed(context, nowPlayingTvSeriesRoutes),
               ),
               Consumer<TvSeriesListNotifier>(builder: (context, data, child) {
                 final state = data.nowPlayingState;
@@ -78,7 +76,7 @@ class _TvSeriesListPageState extends State<TvSeriesListPage> {
               _buildSubHeading(
                 title: 'Popular',
                 onTap: () =>
-                    Navigator.pushNamed(context, PopularTvSeriesPage.routeName),
+                    Navigator.pushNamed(context, popularTvSeriesRoutes),
               ),
               Consumer<TvSeriesListNotifier>(builder: (context, data, child) {
                 final state = data.popularTvSeriesState;
@@ -94,8 +92,8 @@ class _TvSeriesListPageState extends State<TvSeriesListPage> {
               }),
               _buildSubHeading(
                 title: 'Top Rated',
-                onTap: () => Navigator.pushNamed(
-                    context, TopRatedTvSeriesPage.routeName),
+                onTap: () =>
+                    Navigator.pushNamed(context, topRatedTvSeriesRoutes),
               ),
               Consumer<TvSeriesListNotifier>(builder: (context, data, child) {
                 final state = data.topRatedTvSeriesState;
@@ -160,7 +158,7 @@ class TvSeriesList extends StatelessWidget {
               onTap: () {
                 Navigator.pushNamed(
                   context,
-                  TvSeriesDetailPage.routeName,
+                  detailTvSeriesRoutes,
                   arguments: tv.id,
                 );
               },

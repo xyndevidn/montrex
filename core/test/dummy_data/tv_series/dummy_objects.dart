@@ -4,7 +4,7 @@ import 'package:core/domain/entities/season.dart';
 import 'package:core/domain/entities/tv_series.dart';
 import 'package:core/domain/entities/tv_series_detail.dart';
 
-final testTvSerives = TvSeries(
+final testTvSeries = TvSeries(
   backdropPath: "/8cyB9YCbV5CfOyZUUjg2e8U9s1R.jpg",
   firstAirDate: "2023-09-20",
   genreIds: const [18],
@@ -20,7 +20,7 @@ final testTvSerives = TvSeries(
   voteCount: 1,
 );
 
-final testTvSeriesList = [testTvSerives];
+final testTvSeriesList = [testTvSeries];
 
 const testTvSeriesDetail = TvSeriesDetail(
   backdropPath: "/gmECX1DvFgdUPjtio2zaL8BPYPu.jpg",

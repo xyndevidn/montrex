@@ -35,7 +35,7 @@ void main() {
       });
   });
 
-  final tTvSeriesist = <TvSeries>[testTvSerives];
+  final tTvSeriesist = <TvSeries>[testTvSeries];
 
   group('now playing tv series', () {
     test('initialState should be empty', () {

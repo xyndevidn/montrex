@@ -8,6 +8,10 @@ import 'package:core/presentation/blocs/movie/now_playing_movies/now_playing_mov
 import 'package:core/presentation/blocs/movie/search_movies/search_movies_bloc.dart';
 import 'package:core/presentation/blocs/movie/top_rated_movies/top_rated_movies_bloc.dart';
 import 'package:core/presentation/blocs/movie/watchlist_movies/watchlist_movies_bloc.dart';
+import 'package:core/presentation/blocs/tv_series/detail_tv_series/detail_tv_series_bloc.dart';
+import 'package:core/presentation/blocs/tv_series/now_playing_tv_series/now_playing_tv_series_bloc.dart';
+import 'package:core/presentation/blocs/tv_series/popular_tv_series/popular_tv_series_bloc.dart';
+import 'package:core/presentation/blocs/tv_series/top_rated_tv_series/top_rated_tv_series_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:core/presentation/blocs/movie/popular_movies/popular_movies_bloc.dart';
 import 'package:core/presentation/pages/movie/search_movie_page.dart';
@@ -24,10 +28,6 @@ import 'package:core/presentation/pages/tv_series/popular_tv_series_page.dart';
 import 'package:core/presentation/pages/tv_series/top_rated_tv_series_page.dart';
 import 'package:core/presentation/pages/tv_series/tv_series_detail_page.dart';
 import 'package:core/presentation/pages/tv_series/watchlist_tv_series_page.dart';
-import 'package:core/presentation/provider/tv_series/now_playing_tv_series_notifier.dart';
-import 'package:core/presentation/provider/tv_series/popular_tv_series_notifier.dart';
-import 'package:core/presentation/provider/tv_series/top_rated_tv_series_notifier.dart';
-import 'package:core/presentation/provider/tv_series/tv_series_detail_notifier.dart';
 import 'package:core/presentation/provider/tv_series/tv_series_list_notifier.dart';
 import 'package:core/presentation/provider/tv_series/tv_series_search_notifier.dart';
 import 'package:core/presentation/provider/tv_series/watchlist_tv_series_notifier.dart';
@@ -65,24 +65,25 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (_) => di.locator<WatchlistMoviesBloc>(),
         ),
+        // Bloc Tv Series
+        BlocProvider(
+          create: (_) => di.locator<NowPlayingTvSeriesBloc>(),
+        ),
+        BlocProvider(
+          create: (_) => di.locator<PopularTvSeriesBloc>(),
+        ),
+        BlocProvider(
+          create: (_) => di.locator<TopRatedTvSeriesBloc>(),
+        ),
+        BlocProvider(
+          create: (_) => di.locator<DetailTvSeriesBloc>(),
+        ),
         // Provider Tv Series
         ChangeNotifierProvider(
           create: (_) => di.locator<TvSeriesListNotifier>(),
         ),
         ChangeNotifierProvider(
-          create: (_) => di.locator<TvSeriesDetailNotifier>(),
-        ),
-        ChangeNotifierProvider(
           create: (_) => di.locator<TvSeriesSearchNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<NowPlayingTvSeriesNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<TopRatedTvSeriesNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<PopularTvSeriesNotifier>(),
         ),
         ChangeNotifierProvider(
           create: (_) => di.locator<WatchlistTvSeriesNotifier>(),
@@ -124,16 +125,16 @@ class MyApp extends StatelessWidget {
               return CupertinoPageRoute(
                   builder: (_) => const SearchMoviePage());
             // Tv Series
-            case NowPlayingTvSeriesPage.routeName:
+            case nowPlayingTvSeriesRoutes:
               return CupertinoPageRoute(
                   builder: (_) => const NowPlayingTvSeriesPage());
-            case PopularTvSeriesPage.routeName:
+            case popularTvSeriesRoutes:
               return CupertinoPageRoute(
                   builder: (_) => const PopularTvSeriesPage());
-            case TopRatedTvSeriesPage.routeName:
+            case topRatedTvSeriesRoutes:
               return CupertinoPageRoute(
                   builder: (_) => const TopRatedTvSeriesPage());
-            case TvSeriesDetailPage.routeName:
+            case detailTvSeriesRoutes:
               final id = settings.arguments as int;
               return MaterialPageRoute(
                 builder: (_) => TvSeriesDetailPage(id: id),

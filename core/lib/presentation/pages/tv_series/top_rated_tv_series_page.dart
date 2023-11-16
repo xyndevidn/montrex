@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../common/state_enum.dart';
-import '../../../presentation/provider/tv_series/top_rated_tv_series_notifier.dart';
 import '../../../presentation/widgets/tv_card_list.dart';
+import '../../blocs/tv_series/top_rated_tv_series/top_rated_tv_series_bloc.dart';
 
 class TopRatedTvSeriesPage extends StatefulWidget {
-  static const routeName = '/top-rated-tv';
   const TopRatedTvSeriesPage({super.key});
 
   @override
@@ -18,8 +16,7 @@ class _TopRatedTvSeriesPageState extends State<TopRatedTvSeriesPage> {
   void initState() {
     super.initState();
     Future.microtask(() =>
-        Provider.of<TopRatedTvSeriesNotifier>(context, listen: false)
-            .fetchTopRatedTvSeries());
+        context.read<TopRatedTvSeriesBloc>().add(FetchTopRatedTvSeries()));
   }
 
   @override
@@ -30,24 +27,28 @@ class _TopRatedTvSeriesPageState extends State<TopRatedTvSeriesPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Consumer<TopRatedTvSeriesNotifier>(
-          builder: (context, data, child) {
-            if (data.state == RequestState.loading) {
+        child: BlocBuilder<TopRatedTvSeriesBloc, TopRatedTvSeriesState>(
+          builder: (_, state) {
+            if (state is TopRatedTvSeriesLoading) {
               return const Center(
                 child: CircularProgressIndicator(),
               );
-            } else if (data.state == RequestState.loaded) {
+            } else if (state is TopRatedTvSeriesHasData) {
               return ListView.builder(
-                itemBuilder: (context, index) {
-                  final tvSeries = data.tvSeries[index];
+                itemBuilder: (_, index) {
+                  final tvSeries = state.result[index];
                   return TvSeriesCard(tvSeries);
                 },
-                itemCount: data.tvSeries.length,
+                itemCount: state.result.length,
               );
-            } else {
+            } else if (state is TopRatedTvSeriesError) {
               return Center(
                 key: const Key('error_message'),
-                child: Text(data.message),
+                child: Text(state.message),
+              );
+            } else {
+              return const Center(
+                child: Text('Empty data'),
               );
             }
           },
