@@ -13,7 +13,7 @@ void main() {
     final iconBack = find.byKey(const Key('iconBack'));
     final iconMenuWatchlist = find.byIcon(Icons.bookmark);
 
-    testWidgets('Verify watchlist', (WidgetTester tester) async {
+    testWidgets('Verify watchlist movies', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
 

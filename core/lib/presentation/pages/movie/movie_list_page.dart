@@ -1,20 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
 
 import '../../../common/constants.dart';
 import '../../../common/routes.dart';
 import '../../../common/styles/text_style.dart';
 import '../../../domain/entities/movie.dart';
-import '../../../presentation/pages/movie/movie_detail_page.dart';
-import '../../../presentation/pages/movie/search_movie_page.dart';
-import '../../../presentation/pages/movie/top_rated_movies_page.dart';
-import '../../../presentation/pages/movie/watchlist_movies_page.dart';
-import '../../../presentation/provider/movie/movie_list_notifier.dart';
-import '../../../common/state_enum.dart';
 import '../../blocs/movie/now_playing_movies/now_playing_movies_bloc.dart';
 import '../../blocs/movie/popular_movies/popular_movies_bloc.dart';
+import '../../blocs/movie/top_rated_movies/top_rated_movies_bloc.dart';
 
 class MovieListPage extends StatefulWidget {
   const MovieListPage({super.key});
@@ -31,8 +25,7 @@ class _MovieListPageState extends State<MovieListPage> {
     Future.microtask(() {
       context.read<NowPlayingMoviesBloc>().add(FetchNowPlayingMovies());
       context.read<PopularMoviesBloc>().add(FetchPopularMovies());
-      Provider.of<MovieListNotifier>(context, listen: false)
-          .fetchTopRatedMovies();
+      context.read<TopRatedMoviesBloc>().add(FetchTopRatedMovies());
     });
   }
 
@@ -44,13 +37,13 @@ class _MovieListPageState extends State<MovieListPage> {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.pushNamed(context, SearchMoviePage.routeName);
+              Navigator.pushNamed(context, searchMovieRoute);
             },
             icon: const Icon(Icons.search),
           ),
           IconButton(
             onPressed: () {
-              Navigator.pushNamed(context, WatchlistMoviesPage.routeName);
+              Navigator.pushNamed(context, watchlistMovieRoute);
             },
             icon: const Icon(Icons.bookmark),
           )
@@ -81,7 +74,7 @@ class _MovieListPageState extends State<MovieListPage> {
               ),
               _buildSubHeading(
                 title: 'Popular',
-                onTap: () => Navigator.pushNamed(context, popularMoviesRoute),
+                onTap: () => Navigator.pushNamed(context, popularMovieRoute),
               ),
               BlocBuilder<PopularMoviesBloc, PopularMoviesState>(
                 builder: (_, state) {
@@ -98,21 +91,21 @@ class _MovieListPageState extends State<MovieListPage> {
               ),
               _buildSubHeading(
                 title: 'Top Rated',
-                onTap: () =>
-                    Navigator.pushNamed(context, TopRatedMoviesPage.routeName),
+                onTap: () => Navigator.pushNamed(context, topRatedMovieRoute),
               ),
-              Consumer<MovieListNotifier>(builder: (context, data, child) {
-                final state = data.topRatedMoviesState;
-                if (state == RequestState.loading) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (state == RequestState.loaded) {
-                  return MovieList(data.topRatedMovies);
-                } else {
-                  return const Text('Failed');
-                }
-              }),
+              BlocBuilder<TopRatedMoviesBloc, TopRatedMoviesState>(
+                builder: (_, state) {
+                  if (state is TopRatedMoviesLoading) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (state is TopRatedMoviesHasData) {
+                    return MovieList(state.result);
+                  } else {
+                    return const Text('Failed');
+                  }
+                },
+              ),
             ],
           ),
         ),
@@ -165,7 +158,7 @@ class MovieList extends StatelessWidget {
               onTap: () {
                 Navigator.pushNamed(
                   context,
-                  MovieDetailPage.routeName,
+                  detailMovieRoute,
                   arguments: movie.id,
                 );
               },
