@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "495662603586",
+    "project_id": "montrex-7ba17",
+    "storage_bucket": "montrex-7ba17.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:495662603586:android:1f6c0a789b6507495d7cdb",
+        "android_client_info": {
+          "package_name": "id.xyndev.montrex"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfD939D0FZfGtMFFLuyR_cKCPEWZT4pj0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

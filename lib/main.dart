@@ -16,6 +16,7 @@ import 'package:core/presentation/blocs/tv_series/search_tv_series/search_tv_ser
 import 'package:core/presentation/blocs/tv_series/top_rated_tv_series/top_rated_tv_series_bloc.dart';
 import 'package:core/presentation/blocs/tv_series/watchlist_tv_series/watchlist_tv_series_bloc.dart';
 import 'package:core/presentation/pages/tv_series/watchlist_tv_series_page.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:core/presentation/blocs/movie/popular_movies/popular_movies_bloc.dart';
 import 'package:core/presentation/pages/movie/search_movie_page.dart';
@@ -31,12 +32,17 @@ import 'package:core/presentation/pages/tv_series/search_tv_series_page.dart';
 import 'package:core/presentation/pages/tv_series/popular_tv_series_page.dart';
 import 'package:core/presentation/pages/tv_series/top_rated_tv_series_page.dart';
 import 'package:core/presentation/pages/tv_series/tv_series_detail_page.dart';
+import 'package:montrex/firebase_options.dart';
 import 'package:provider/provider.dart';
 import 'package:montrex/injection.dart' as di;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await HttpSslPinning.init();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   di.init();
   runApp(const MyApp());
