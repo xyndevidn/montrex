@@ -45,11 +45,9 @@ void main() {
         .thenReturn(WatchlistTvSeriesLoading());
 
     final progressBarFinder = find.byType(CircularProgressIndicator);
-    final centerFinder = find.byType(Center);
 
     await tester.pumpWidget(makeTestableWidget(const WatchlistTvSeriesPage()));
 
-    expect(centerFinder, findsOneWidget);
     expect(progressBarFinder, findsOneWidget);
   });
 

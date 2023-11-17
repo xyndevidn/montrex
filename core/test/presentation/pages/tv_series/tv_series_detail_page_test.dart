@@ -101,14 +101,14 @@ void main() {
         ),
         DetailTvSeriesState.initial().copyWith(
           isAddedToWatchlist: false,
-          watchlistMessage: 'Added to Watchlist',
+          watchlistMessage: 'Added to Watchlist Tv Series',
         ),
       ]),
       initialState: DetailTvSeriesState.initial(),
     );
 
     final snackbar = find.byType(SnackBar);
-    final textMessage = find.text('Added to Watchlist');
+    final textMessage = find.text('Added to Watchlist Tv Series');
 
     await tester
         .pumpWidget(makeTestableWidget(const TvSeriesDetailPage(id: tId)));
