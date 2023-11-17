@@ -6,9 +6,12 @@ const searchMovieRoute = '/search-movie';
 const watchlistMovieRoute = '/watchlist-movie';
 
 // tv series
-const nowPlayingTvSeriesRoutes = '/now-playing-tv-series';
-const popularTvSeriesRoutes = '/popular-tv-series';
-const topRatedTvSeriesRoutes = '/top-rated-tv-series';
-const detailTvSeriesRoutes = '/detail-tv-series';
-const searchTvSeriesRoutes = '/search-tv-series';
-const watchlistTvSeriesRoutes = '/watchlist-tv-series';
+const nowPlayingTvSeriesRoute = '/now-playing-tv-series';
+const popularTvSeriesRoute = '/popular-tv-series';
+const topRatedTvSeriesRoute = '/top-rated-tv-series';
+const detailTvSeriesRoute = '/detail-tv-series';
+const searchTvSeriesRoute = '/search-tv-series';
+const watchlistTvSeriesRoute = '/watchlist-tv-series';
+
+const homeRoute = '/home';
+const aboutRoute = '/about';

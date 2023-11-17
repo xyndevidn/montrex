@@ -1,3 +1,4 @@
+import 'package:core/common/http_ssl_pinning.dart';
 import 'package:core/common/styles/color.dart';
 import 'package:core/common/styles/text_style.dart';
 import 'package:core/common/utils.dart';
@@ -33,7 +34,10 @@ import 'package:core/presentation/pages/tv_series/tv_series_detail_page.dart';
 import 'package:provider/provider.dart';
 import 'package:montrex/injection.dart' as di;
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await HttpSslPinning.init();
+
   di.init();
   runApp(const MyApp());
 }
@@ -96,9 +100,9 @@ class MyApp extends StatelessWidget {
         navigatorObservers: [routeObserver],
         onGenerateRoute: (RouteSettings settings) {
           switch (settings.name) {
-            case '/home':
+            case homeRoute:
               return MaterialPageRoute(builder: (_) => const HomePage());
-            case AboutPage.routeName:
+            case aboutRoute:
               return MaterialPageRoute(builder: (_) => const AboutPage());
             // Movie
             case popularMovieRoute:
@@ -120,25 +124,25 @@ class MyApp extends StatelessWidget {
               return CupertinoPageRoute(
                   builder: (_) => const SearchMoviePage());
             // Tv Series
-            case nowPlayingTvSeriesRoutes:
+            case nowPlayingTvSeriesRoute:
               return CupertinoPageRoute(
                   builder: (_) => const NowPlayingTvSeriesPage());
-            case popularTvSeriesRoutes:
+            case popularTvSeriesRoute:
               return CupertinoPageRoute(
                   builder: (_) => const PopularTvSeriesPage());
-            case topRatedTvSeriesRoutes:
+            case topRatedTvSeriesRoute:
               return CupertinoPageRoute(
                   builder: (_) => const TopRatedTvSeriesPage());
-            case detailTvSeriesRoutes:
+            case detailTvSeriesRoute:
               final id = settings.arguments as int;
               return MaterialPageRoute(
                 builder: (_) => TvSeriesDetailPage(id: id),
                 settings: settings,
               );
-            case searchTvSeriesRoutes:
+            case searchTvSeriesRoute:
               return CupertinoPageRoute(
                   builder: (_) => const SearchTvSeriesPage());
-            case watchlistTvSeriesRoutes:
+            case watchlistTvSeriesRoute:
               return MaterialPageRoute(
                   builder: (_) => const WatchlistTvSeriesPage());
             default:

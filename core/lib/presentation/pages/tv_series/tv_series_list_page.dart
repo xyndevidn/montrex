@@ -37,13 +37,13 @@ class _TvSeriesListPageState extends State<TvSeriesListPage> {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.pushNamed(context, searchTvSeriesRoutes);
+              Navigator.pushNamed(context, searchTvSeriesRoute);
             },
             icon: const Icon(Icons.search),
           ),
           IconButton(
             onPressed: () {
-              Navigator.pushNamed(context, watchlistTvSeriesRoutes);
+              Navigator.pushNamed(context, watchlistTvSeriesRoute);
             },
             icon: const Icon(Icons.bookmark),
           )
@@ -58,7 +58,7 @@ class _TvSeriesListPageState extends State<TvSeriesListPage> {
               _buildSubHeading(
                 title: 'Now Playing',
                 onTap: () =>
-                    Navigator.pushNamed(context, nowPlayingTvSeriesRoutes),
+                    Navigator.pushNamed(context, nowPlayingTvSeriesRoute),
               ),
               BlocBuilder<NowPlayingTvSeriesBloc, NowPlayingTvSeriesState>(
                 builder: (_, state) {
@@ -75,8 +75,7 @@ class _TvSeriesListPageState extends State<TvSeriesListPage> {
               ),
               _buildSubHeading(
                 title: 'Popular',
-                onTap: () =>
-                    Navigator.pushNamed(context, popularTvSeriesRoutes),
+                onTap: () => Navigator.pushNamed(context, popularTvSeriesRoute),
               ),
               BlocBuilder<PopularTvSeriesBloc, PopularTvSeriesState>(
                 builder: (_, state) {
@@ -94,7 +93,7 @@ class _TvSeriesListPageState extends State<TvSeriesListPage> {
               _buildSubHeading(
                 title: 'Top Rated',
                 onTap: () =>
-                    Navigator.pushNamed(context, topRatedTvSeriesRoutes),
+                    Navigator.pushNamed(context, topRatedTvSeriesRoute),
               ),
               BlocBuilder<TopRatedTvSeriesBloc, TopRatedTvSeriesState>(
                 builder: (_, state) {
@@ -161,7 +160,7 @@ class TvSeriesList extends StatelessWidget {
               onTap: () {
                 Navigator.pushNamed(
                   context,
-                  detailTvSeriesRoutes,
+                  detailTvSeriesRoute,
                   arguments: tv.id,
                 );
               },

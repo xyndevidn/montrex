@@ -18,7 +18,7 @@ class TvSeriesCard extends StatelessWidget {
         onTap: () {
           Navigator.pushNamed(
             context,
-            detailTvSeriesRoutes,
+            detailTvSeriesRoute,
             arguments: tvSeries.id,
           );
         },

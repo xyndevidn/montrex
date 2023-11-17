@@ -251,7 +251,7 @@ class DetailContent extends StatelessWidget {
                                             onTap: () {
                                               Navigator.pushReplacementNamed(
                                                 context,
-                                                detailTvSeriesRoutes,
+                                                detailTvSeriesRoute,
                                                 arguments: movie.id,
                                               );
                                             },
