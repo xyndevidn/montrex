@@ -25,10 +25,12 @@ class MovieRepositoryImpl implements MovieRepository {
     try {
       final result = await remoteDataSource.getNowPlayingMovies();
       return Right(result.map((model) => model.toEntity()).toList());
-    } on ServerException {
-      return const Left(ServerFailure(''));
     } on SocketException {
       return const Left(ConnectionFailure('Failed to connect to the network'));
+    } on ServerException {
+      return const Left(ServerFailure('Failed to connect to the server'));
+    } on TlsException catch (e) {
+      return Left(CertificateFailure('Certificated Not Valid:\n${e.message}'));
     }
   }
 
@@ -37,10 +39,12 @@ class MovieRepositoryImpl implements MovieRepository {
     try {
       final result = await remoteDataSource.getMovieDetail(id);
       return Right(result.toEntity());
-    } on ServerException {
-      return const Left(ServerFailure(''));
     } on SocketException {
       return const Left(ConnectionFailure('Failed to connect to the network'));
+    } on ServerException {
+      return const Left(ServerFailure('Failed to connect to the server'));
+    } on TlsException catch (e) {
+      return Left(CertificateFailure('Certificated Not Valid:\n${e.message}'));
     }
   }
 
@@ -49,10 +53,12 @@ class MovieRepositoryImpl implements MovieRepository {
     try {
       final result = await remoteDataSource.getMovieRecommendations(id);
       return Right(result.map((model) => model.toEntity()).toList());
-    } on ServerException {
-      return const Left(ServerFailure(''));
     } on SocketException {
       return const Left(ConnectionFailure('Failed to connect to the network'));
+    } on ServerException {
+      return const Left(ServerFailure('Failed to connect to the server'));
+    } on TlsException catch (e) {
+      return Left(CertificateFailure('Certificated Not Valid:\n${e.message}'));
     }
   }
 
@@ -61,10 +67,12 @@ class MovieRepositoryImpl implements MovieRepository {
     try {
       final result = await remoteDataSource.getPopularMovies();
       return Right(result.map((model) => model.toEntity()).toList());
-    } on ServerException {
-      return const Left(ServerFailure(''));
     } on SocketException {
       return const Left(ConnectionFailure('Failed to connect to the network'));
+    } on ServerException {
+      return const Left(ServerFailure('Failed to connect to the server'));
+    } on TlsException catch (e) {
+      return Left(CertificateFailure('Certificated Not Valid:\n${e.message}'));
     }
   }
 
@@ -73,10 +81,12 @@ class MovieRepositoryImpl implements MovieRepository {
     try {
       final result = await remoteDataSource.getTopRatedMovies();
       return Right(result.map((model) => model.toEntity()).toList());
-    } on ServerException {
-      return const Left(ServerFailure(''));
     } on SocketException {
       return const Left(ConnectionFailure('Failed to connect to the network'));
+    } on ServerException {
+      return const Left(ServerFailure('Failed to connect to the server'));
+    } on TlsException catch (e) {
+      return Left(CertificateFailure('Certificated Not Valid:\n${e.message}'));
     }
   }
 
@@ -85,10 +95,12 @@ class MovieRepositoryImpl implements MovieRepository {
     try {
       final result = await remoteDataSource.searchMovies(query);
       return Right(result.map((model) => model.toEntity()).toList());
-    } on ServerException {
-      return const Left(ServerFailure(''));
     } on SocketException {
       return const Left(ConnectionFailure('Failed to connect to the network'));
+    } on ServerException {
+      return const Left(ServerFailure('Failed to connect to the server'));
+    } on TlsException catch (e) {
+      return Left(CertificateFailure('Certificated Not Valid:\n${e.message}'));
     }
   }
 
