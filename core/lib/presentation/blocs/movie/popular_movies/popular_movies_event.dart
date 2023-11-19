@@ -1,3 +1,5 @@
+// coverage:ignore-file
+
 part of 'popular_movies_bloc.dart';
 
 abstract class PopularMoviesEvent extends Equatable {

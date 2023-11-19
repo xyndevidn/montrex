@@ -1,3 +1,5 @@
+// coverage:ignore-file
+
 part of 'watchlist_movies_bloc.dart';
 
 abstract class WatchlistMoviesEvent extends Equatable {

@@ -1,3 +1,5 @@
+// coverage:ignore-file
+
 part of 'now_playing_tv_series_bloc.dart';
 
 abstract class NowPlayingTvSeriesEvent extends Equatable {

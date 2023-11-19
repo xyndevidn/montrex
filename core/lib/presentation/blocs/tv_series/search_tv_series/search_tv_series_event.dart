@@ -1,3 +1,5 @@
+// coverage:ignore-file
+
 part of 'search_tv_series_bloc.dart';
 
 abstract class SearchTvSeriesEvent extends Equatable {

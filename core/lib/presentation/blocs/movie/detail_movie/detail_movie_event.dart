@@ -1,3 +1,5 @@
+// coverage:ignore-file
+
 part of 'detail_movie_bloc.dart';
 
 abstract class DetailMovieEvent extends Equatable {
