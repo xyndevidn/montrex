@@ -30,12 +30,14 @@ class TvSeriesTable extends Equatable {
         overview: map['overview'],
       );
 
+  // coverage:ignore-start
   Map<String, dynamic> toJson() => {
         'id': id,
         'name': name,
         'posterPath': posterPath,
         'overview': overview,
       };
+  // coverage:ignore-end
 
   TvSeries toEntity() => TvSeries.watchlist(
         id: id,

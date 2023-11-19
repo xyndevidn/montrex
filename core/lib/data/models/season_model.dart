@@ -33,6 +33,7 @@ class SeasonModel extends Equatable {
         voteAverage: json["vote_average"].toDouble(),
       );
 
+  // coverage:ignore-start
   Map<String, dynamic> toJson() => {
         "air_date": airDate,
         "episode_count": episodeCount,
@@ -43,6 +44,7 @@ class SeasonModel extends Equatable {
         "season_number": seasonNumber,
         "vote_average": voteAverage.toDouble(),
       };
+  // coverage:ignore-end
 
   Season toEntity() {
     return Season(

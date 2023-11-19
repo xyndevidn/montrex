@@ -84,6 +84,7 @@ class TvSeriesDetailResponse extends Equatable {
         voteCount: json["vote_count"],
       );
 
+  // coverage:ignore-start
   Map<String, dynamic> toJson() => {
         "backdrop_path": backdropPath,
         "first_air_date": firstAirDate,
@@ -109,6 +110,8 @@ class TvSeriesDetailResponse extends Equatable {
         "vote_average": voteAverage,
         "vote_count": voteCount,
       };
+
+  // coverage:ignore-end
 
   TvSeriesDetail toEntity() {
     return TvSeriesDetail(

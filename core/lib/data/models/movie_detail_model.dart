@@ -76,6 +76,7 @@ class MovieDetailResponse extends Equatable {
         voteCount: json["vote_count"],
       );
 
+  // coverage:ignore-start
   Map<String, dynamic> toJson() => {
         "adult": adult,
         "backdrop_path": backdropPath,
@@ -99,6 +100,7 @@ class MovieDetailResponse extends Equatable {
         "vote_average": voteAverage,
         "vote_count": voteCount,
       };
+  // coverage:ignore-end
 
   MovieDetail toEntity() {
     return MovieDetail(

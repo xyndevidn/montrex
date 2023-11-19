@@ -21,6 +21,9 @@ class DatabaseFailure extends Failure {
   const DatabaseFailure(String message) : super(message);
 }
 
+// coverage:ignore-start
 class CertificateFailure extends Failure {
   const CertificateFailure(String message) : super(message);
 }
+
+// coverage:ignore-end

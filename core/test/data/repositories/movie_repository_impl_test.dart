@@ -76,7 +76,7 @@ void main() {
       final result = await repository.getNowPlayingMovies();
       // assert
       verify(mockRemoteDataSource.getNowPlayingMovies());
-      /* workaround to test List in Right. Issue: https://github.com/spebbe/dartz/issues/80 */
+
       final resultList = result.getOrElse(() => []);
       expect(resultList, tMovieList);
     });
@@ -91,7 +91,8 @@ void main() {
       final result = await repository.getNowPlayingMovies();
       // assert
       verify(mockRemoteDataSource.getNowPlayingMovies());
-      expect(result, equals(const Left(ServerFailure(''))));
+      expect(result,
+          equals(const Left(ServerFailure('Failed to connect to the server'))));
     });
 
     test(
@@ -134,7 +135,8 @@ void main() {
       // act
       final result = await repository.getPopularMovies();
       // assert
-      expect(result, const Left(ServerFailure('')));
+      expect(
+          result, const Left(ServerFailure('Failed to connect to the server')));
     });
 
     test(
@@ -173,7 +175,8 @@ void main() {
       // act
       final result = await repository.getTopRatedMovies();
       // assert
-      expect(result, const Left(ServerFailure('')));
+      expect(
+          result, const Left(ServerFailure('Failed to connect to the server')));
     });
 
     test(
@@ -239,7 +242,8 @@ void main() {
       final result = await repository.getMovieDetail(tId);
       // assert
       verify(mockRemoteDataSource.getMovieDetail(tId));
-      expect(result, equals(const Left(ServerFailure(''))));
+      expect(result,
+          equals(const Left(ServerFailure('Failed to connect to the server'))));
     });
 
     test(
@@ -287,7 +291,8 @@ void main() {
       final result = await repository.getMovieRecommendations(tId);
       // assertbuild runner
       verify(mockRemoteDataSource.getMovieRecommendations(tId));
-      expect(result, equals(const Left(ServerFailure(''))));
+      expect(result,
+          equals(const Left(ServerFailure('Failed to connect to the server'))));
     });
 
     test(
@@ -331,7 +336,8 @@ void main() {
       // act
       final result = await repository.searchMovies(tQuery);
       // assert
-      expect(result, const Left(ServerFailure('')));
+      expect(
+          result, const Left(ServerFailure('Failed to connect to the server')));
     });
 
     test(
