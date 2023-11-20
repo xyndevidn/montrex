@@ -1,0 +1,29 @@
+{
+    "page": 1,
+    "results": [
+      {
+        "adult": false,
+        "backdrop_path": "/path.jpg",
+        "genre_ids": [
+          1,
+          2,
+          3
+        ],
+        "id": 12,
+        "origin_country": [
+          "JP"
+        ],
+        "original_language": "original langauge",
+        "original_name": "original name",
+        "overview": "overview",
+        "popularity": 1234.567,
+        "poster_path": "/path.jpg",
+        "first_air_date": "2020-10-03",
+        "name": "name",
+        "vote_average": 1.234,
+        "vote_count": 2810
+      }
+    ],
+    "total_pages": 1,
+    "total_results": 1
+  }
